@@ -1,0 +1,49 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>在线生成GIF</title>
+    <style>
+
+    </style>
+    <script src="jquery.js"></script>
+      <script src="gif/js/gifshot.js"></script>
+      <script src="gif/js/ion.rangeSlider.js"></script>
+      <script type="text/javascript" src="gif/js/jquery.qrcode.min.js"></script>
+      <script src="gif/js/jquery.Jcrop.js"></script>
+      <script src="gif/js/jquery.color.js"></script>
+      <link rel="stylesheet" href="gif/css/ion.rangeSlider.css" />
+      <link rel="stylesheet" href="gif/css/normalize.css" />
+      <link rel="stylesheet" href="gif/css/ion.rangeSlider.skinModern.css" />
+      <link rel="stylesheet" href="gif/css/jquery.Jcrop.css" />
+
+      <script src="popup.js"></script>
+
+  </head>
+  <body>
+  <input type="file" name="fileupload" class="fileupload" />
+  <img class="preview" style="width:200px; height: 200px"/>
+  <div class="previewgif"></div>
+
+  <div class="range_02"></div>
+  <div id="qrcode"></div>
+
+
+  <p>要使用的图片：</p>
+
+  <p>Canvas:</p>
+
+  <canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
+      Your browser does not support the HTML5 canvas tag.
+  </canvas>
+
+
+    <div id="status"></div>
+    <div id="image-result" ></div>
+  </body>
+</html>
+

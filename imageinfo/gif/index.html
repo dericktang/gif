@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/gifshot.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/ion.rangeSlider.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="js/jquery.Jcrop.js"></script>
+    <script src="js/jquery.color.js"></script>
+    <link rel="stylesheet" href="css/ion.rangeSlider.css" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinModern.css" />
+    <link rel="stylesheet" href="css/jquery.Jcrop.css" />
+
+</head>
+<body>
+<img id="element_id" src="https://www.baidu.com/img/baidu_jgylogo3.gif">
+
+//网络图片
+<input type="text" name="url" class="url">
+
+//本地上传图片
+<input type="file" name="fileupload" class="fileupload" />
+<img class="preview" style="width:200px; height: 200px"/>
+<div class="previewgif"></div>
+
+<div class="range_02"></div>
+<div id="qrcode"></div>
+
+
+<p>要使用的图片：</p>
+
+<p>Canvas:</p>
+
+<canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script>
+
+</script>
+
+
+</body>
+</html>
+
+<script>
+    var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+    var img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = "https://www.baidu.com/img/baidu_jgylogo3.gif";
+    $('#element_id').Jcrop({
+        onChange:function(){
+            var pos = this.tellScaled();
+            ctx.drawImage(img,pos.x,pos.y,pos.w,pos.h,0,0,pos.w,pos.h);
+        },
+        onSelect:function(){
+            console.log( c.toDataURL("image/png"));
+        }
+    });
+    function gifShot(images,interval){
+        gifshot.createGIF({
+            images:images,
+            interval: interval
+        }, function (obj) {
+            if (!obj.error) {
+                var image = obj.image, animatedImage = document.createElement('img');
+                animatedImage.src = image;
+                $(".previewgif").empty().append(animatedImage);
+                $('#qrcode').qrcode("https://www.baidu.com/img/baidu_jgylogo3.gif");
+
+            }
+        });
+    }
+    var images = [];
+    $('.fileupload').change(function(){
+        var f = $(".fileupload")[0].files[0];
+        var src = window.URL.createObjectURL(f);
+        $(".preview").attr("src", src);
+        images.push(src);
+
+        gifShot(images,1);
+
+    });
+
+
+    $(".range_02").ionRangeSlider({
+        min: 0.1,
+        max: 1,
+        step: 0.01,
+        from: 0.5,
+        onFinish: function (data) {
+            console.log("onFinish",data);
+            gifShot(images,data.from);
+        },
+    });
+
+
+</script>
