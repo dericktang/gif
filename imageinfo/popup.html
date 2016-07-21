@@ -5,10 +5,30 @@
  value "popup.html".
  -->
 <html>
+<meta charset="utf-8">
   <head>
-    <title>在线生成GIF</title>
+    <title>鏃㈠緱鐢熸垚GIF鍔ㄧ敾</title>
     <style>
-
+      .plugin{
+        width: 600px;
+        height: 600px;
+      }
+      .topcl{
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+      }
+      .cl{
+        float: left;
+        width: 50%;
+      }
+      .cl img{
+        width: 200px;
+      }
+      .preview{
+        float: right;
+        width: 50%;
+      }
     </style>
     <script src="jquery.js"></script>
       <script src="gif/js/gifshot.js"></script>
@@ -25,25 +45,34 @@
 
   </head>
   <body>
-  <input type="file" name="fileupload" class="fileupload" />
-  <img class="preview" style="width:200px; height: 200px"/>
-  <div class="previewgif"></div>
 
-  <div class="range_02"></div>
-  <div id="qrcode"></div>
+  <div class="plugin">
+    <div class="h1">鏃㈠緱鐢熸垚GIF鍔ㄧ敾</div>
+    <div class="topcl">
+      <div class="cl">
+        <div class="option">纭畾  鍙栨秷</div>
+        <div id="image-result" ></div>
+      </div>
+      <div class="preview">
+        <canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
+          Your browser does not support the HTML5 canvas tag.
+        </canvas>
+        <div class="previewgif"></div>
+      </div>
+    </div>
+    <input type="file" name="fileupload" class="fileupload" />
+    <div class="setting">
+      <div class="range_02"></div>
+    </div>
+    <div id="qrcode"></div>
+  </div>
 
 
-  <p>要使用的图片：</p>
-
-  <p>Canvas:</p>
-
-  <canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
-      Your browser does not support the HTML5 canvas tag.
-  </canvas>
 
 
-    <div id="status"></div>
-    <div id="image-result" ></div>
+
+
+
   </body>
 </html>
 

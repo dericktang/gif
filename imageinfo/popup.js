@@ -43,15 +43,17 @@ function getCurrentTabUrl(callback) {
 var test = chrome.extension.getBackgroundPage()
 //alert("dddddddddd"+test.account_list())
 document.addEventListener('DOMContentLoaded', function() {
-  var images = test.account_list();
-
+  var image = test.account_list();
+  var images = [];
   var c=document.getElementById("myCanvas");
   var ctx=c.getContext("2d");
   var img = new Image();
   img.crossOrigin = "anonymous";
-  for(var i =0;i<images.length;i++){
-    $("#image-result").html("<img src='"+images[i]+"'/>");
-    img.src = images[i];
+  for(var i =0;i<image.length;i++){
+    $("#image-result").html("<img src='"+image[i]+"'/>");
+    img.src = image[i];
+    images.push(image[i]);
+    gifShot(images,1);
   }
 
 
@@ -73,21 +75,31 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!obj.error) {
         var image = obj.image, animatedImage = document.createElement('img');
         animatedImage.src = image;
-        $(".previewgif").empty().append(animatedImage);
+        $(".previewgif").html(animatedImage);
+        $('#qrcode').empty();
         $('#qrcode').qrcode("https://www.baidu.com/img/baidu_jgylogo3.gif");
 
       }
     });
   }
-  var images = [];
+
   $('.fileupload').change(function(){
     var f = $(".fileupload")[0].files[0];
     var src = window.URL.createObjectURL(f);
-    $(".preview").attr("src", src);
+    $("#image-result").html("<img src='"+src+"'/>");
     images.push(src);
 
     gifShot(images,1);
-
+    img.src = src;
+    $('#image-result img').Jcrop({
+      onChange:function(){
+        var pos = this.tellScaled();
+        ctx.drawImage(img,pos.x,pos.y,pos.w,pos.h,0,0,pos.w,pos.h);
+      },
+      onSelect:function(){
+        console.log( c.toDataURL("image/png"));
+      }
+    });
   });
 
 
