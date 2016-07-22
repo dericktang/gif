@@ -62,7 +62,12 @@
 		var opt = $.extend({}, defaultOption, option);
 		var returnValue = photoClip(container, opt);
 
-		this.destroy = returnValue.destroy;
+		//this.destroy = returnValue.destroy;
+		//this.resetSize =returnValue.resetSize;
+		return {
+			destroy: returnValue.destroy,
+			resetSize:returnValue.resetSize
+		}
 	}
 
 	function photoClip(container, option) {
@@ -675,6 +680,12 @@
 			}
 		}
 
+		function resetSize(size){
+			clipWidth = size[0];
+			clipHeight=size[1];
+			clipImg();
+		}
+
 		function destroy() {
 			$file.off("change");
 			$file = null;
@@ -707,7 +718,8 @@
 		}
 
 		return {
-			destroy: destroy
+			destroy: destroy,
+			resetSize :resetSize
 		};
 	}
 

@@ -1,13 +1,8 @@
 <!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
-<meta charset="utf-8">
   <head>
-    <title>既得生成GIF动画</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>gif裁切</title>
     <style>
       .plugin{
         width: 600px;
@@ -22,12 +17,57 @@
         float: left;
         width: 50%;
       }
-      .cl img{
-        width: 200px;
-      }
+
       .preview{
         float: right;
         width: 50%;
+      }
+      .previewgif{
+        margin: 0px auto;
+        text-align: center;
+        margin-top: 40px;
+        background: gainsboro;
+        width: 200px;
+        height: 200px;
+        line-height: 200px;
+      }
+      .previewgif img{
+        vertical-align: middle;
+      }
+      .imageList{
+
+      }
+      .imageList .img{
+        float: left;
+        margin: 5px;
+      }
+      .imageList .img img{
+        width: 100px;
+      }
+      #clipArea {
+        background: gainsboro;
+        height: 200px;
+        width: 100%;
+      }
+      #fileupload,
+      #clipBtn {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        width: 100%;
+        border-radius: 5px;
+        border: 0;
+        line-height: 30px;
+      }
+      #view {
+        margin: 0 auto;
+        width: 200px;
+        height: 200px;
+        background: gainsboro;
+      }
+      #qrcode{
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
       }
     </style>
     <script src="jquery.js"></script>
@@ -40,39 +80,41 @@
       <link rel="stylesheet" href="gif/css/normalize.css" />
       <link rel="stylesheet" href="gif/css/ion.rangeSlider.skinModern.css" />
       <link rel="stylesheet" href="gif/css/jquery.Jcrop.css" />
-
+      <script src="jQuery-photoClip-master/js/hammer.js"></script>
+      <script src="jQuery-photoClip-master/js/iscroll-zoom.js"></script>
+      <script src="jQuery-photoClip-master/js/lrz.all.bundle.js"></script>
+      <script src="jQuery-photoClip-master/js/jquery.photoClip.min.js"></script>
       <script src="popup.js"></script>
 
   </head>
   <body>
 
+
   <div class="plugin">
-    <div class="h1">既得生成GIF动画</div>
+    <div class="h1">gif裁切</div>
     <div class="topcl">
       <div class="cl">
-        <div class="option">确定  取消</div>
-        <div id="image-result" ></div>
+        <div id="clipArea"></div>
+        <input type="text" id="text" name="text" class="text" />
+        <button id="clipBtn">确定裁切</button>
+        <div class="imageList">
+        </div>
+        <input type="file" id="fileupload" name="fileupload" class="fileupload" />
+        <div class="setting">
+          <div class="range_02"></div>
+          <div class="range_w"></div>
+          <div class="range_h"></div>
+        </div>
       </div>
       <div class="preview">
-        <canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
-          Your browser does not support the HTML5 canvas tag.
-        </canvas>
+        <div id="view"></div>
         <div class="previewgif"></div>
       </div>
     </div>
-    <input type="file" name="fileupload" class="fileupload" />
-    <div class="setting">
-      <div class="range_02"></div>
-    </div>
+
     <div id="qrcode"></div>
   </div>
 
 
-
-
-
-
-
-  </body>
 </html>
 

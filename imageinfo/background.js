@@ -33,10 +33,26 @@ chrome.contextMenus.create({
   "onclick" : getClickHandler()
 });
 
-function account_list(){
+function getImages(){
   return  imageArr;
 }
 
+function setImage(image){
+  imageArr.push(image);
+}
+
+/**
+ * 配置参数，下次载入时
+ * @type {{needCliImages: Array, cliTmpImages: {}, INTERVAL_TIME: number, Width: number, Height: number}}
+ */
+var configGif = {
+ needCliImages : [], //存放生产GIF的图片
+ cliTmpImages : {}, //存放裁切图片
+ text:{},
+ INTERVAL_TIME:0.5, //GIF播放速度
+ Width :200,
+ Height:200
+}
 
 /**
  * 注册标签页更新时的事件

@@ -993,6 +993,7 @@ AnimatedGIF = function (utils, frameWorkerCode, NeuQuant, GifWriter) {
     this.availableWorkers = [];
     this.generatingGIF = false;
     this.options = options;
+    this.currentIndex =0;
     this.initializeWebWorkers(options);
   };
   AnimatedGIF.prototype = {
@@ -1137,16 +1138,31 @@ AnimatedGIF = function (utils, frameWorkerCode, NeuQuant, GifWriter) {
       gifshotOptions = utils.isObject(gifshotOptions) ? gifshotOptions : {};
       var self = this, ctx = self.ctx, options = self.options, width = options.gifWidth, height = options.gifHeight, gifHeight = gifshotOptions.gifHeight, gifWidth = gifshotOptions.gifWidth, text = gifshotOptions.text, fontWeight = gifshotOptions.fontWeight, fontSize = utils.getFontSize(gifshotOptions), fontFamily = gifshotOptions.fontFamily, fontColor = gifshotOptions.fontColor, textAlign = gifshotOptions.textAlign, textBaseline = gifshotOptions.textBaseline, textXCoordinate = gifshotOptions.textXCoordinate ? gifshotOptions.textXCoordinate : textAlign === 'left' ? 1 : textAlign === 'right' ? width : width / 2, textYCoordinate = gifshotOptions.textYCoordinate ? gifshotOptions.textYCoordinate : textBaseline === 'top' ? 1 : textBaseline === 'center' ? height / 2 : height, font = fontWeight + ' ' + fontSize + ' ' + fontFamily, imageData;
       try {
+        //清楚画布，让每个画布独立
+        ctx.clearRect(0,0,width,height);
+        ctx.fillStyle="#fff";
+        ctx.fillRect(0,0,width, height);
+        //所以这里每个画布都可以加入文字
         ctx.drawImage(element, 0, 0, width, height);
-        if (text) {
+        if (text && text[this.currentIndex]) {
+          ctx.fillStyle="#000";
+          var rectHeight = 24;var tmpFontSize=12;
+          if(fontSize){
+            tmpFontSize = fontSize.replace("px","");
+            rectHeight = tmpFontSize*1.5;
+          }
+
+          ctx.fillRect(0,height-rectHeight,width,rectHeight);
+
           ctx.font = font;
           ctx.fillStyle = fontColor;
           ctx.textAlign = textAlign;
           ctx.textBaseline = textBaseline;
-          ctx.fillText(text, textXCoordinate, textYCoordinate);
+          ctx.fillText(text[this.currentIndex], textXCoordinate, textYCoordinate-(rectHeight-tmpFontSize)/2+2);
         }
         imageData = ctx.getImageData(0, 0, width, height);
         self.addFrameImageData(imageData);
+        this.currentIndex++;
       } catch (e) {
         return '' + e;
       }
